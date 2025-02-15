@@ -3,10 +3,24 @@ import "prismjs/themes/prism-tomorrow.css";
 import prism from "prismjs";
 import { useEffect, useState } from 'react';
 import Editor from 'react-simple-code-editor';
+import axios from 'axios';
 function App() {
   const [code, setCode] = useState(`function sum(){
               return 1 + 2;
 }`)
+async function reviewCode(){
+  // axios.post('http://localhost:3000/ai/get-review', {code})
+  // .then(res => {
+  //   console.log(res.data);
+  // })
+  // .catch(err => {
+  //   console.log(err);
+  // })
+  const response = await axios.post('http://localhost:3000/ai/get-review', {code})
+  // console.log(response.data);
+  setReview(response.data);
+}
+const [review, setReview] = useState(``); 
 useEffect(() => {
   prism.highlightAll();
 })
@@ -30,9 +44,11 @@ useEffect(() => {
           }}
           />
         </div>
-        <div className="review">Review</div>
+        <div className="review" onClick={reviewCode}>Review</div>
         </div>
-        <div className="right"></div>
+        <div className="right">
+          {review}
+        </div>
     </main>
     </>
   )
