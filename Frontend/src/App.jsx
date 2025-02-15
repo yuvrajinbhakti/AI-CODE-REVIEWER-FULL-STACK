@@ -3,7 +3,10 @@ import "prismjs/themes/prism-tomorrow.css";
 import prism from "prismjs";
 import { useEffect, useState } from 'react';
 import Editor from 'react-simple-code-editor';
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github-dark.css";
 import axios from 'axios';
+import Markdown from 'react-markdown';
 function App() {
   const [code, setCode] = useState(`function sum(){
               return 1 + 2;
@@ -47,7 +50,7 @@ useEffect(() => {
         <div className="review" onClick={reviewCode}>Review</div>
         </div>
         <div className="right">
-          {review}
+         <Markdown rehypePlugins={rehypeHighlight}>{review}</Markdown> 
         </div>
     </main>
     </>
